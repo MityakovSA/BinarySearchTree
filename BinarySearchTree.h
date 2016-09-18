@@ -12,7 +12,6 @@ public:
 		T value_;
 		Node* left_;
 		Node* right_;
-		friend class BinarySearchTree;
 
 		Node(T value) : value_(value), left_(nullptr), right_(nullptr) {}
 
