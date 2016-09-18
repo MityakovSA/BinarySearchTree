@@ -34,7 +34,7 @@ public:
 
 	BinarySearchTree() : root_(nullptr), size_(0) {};
 
-	BinarySearchTree(const std::initializer_list<T>& list) : root_(nullptr), size_(list.size())
+	BinarySearchTree(const std::initializer_list<T>& list) : root_(nullptr), size_(0)
 	{
 		for (auto& value : list)
 			insert(value);
@@ -45,7 +45,7 @@ public:
 		return size_;
 	};
 
-	auto find(const T& value) //const noexcept -> const T*
+	const T* find(const T& value) //const noexcept -> const T*
 	{
 		if (size_ == 0) return nullptr;
 		Node* curNode = root_;
@@ -85,7 +85,7 @@ public:
 					else
 					{
 						curNode->right_ = new Node(value);
-						++size;
+						++size_;
 						return true;
 					}
 			}
@@ -98,7 +98,7 @@ public:
 		return out;
 	}
 
-	friend std::istream& operator>>(std::istream& in, const BinarySearchTree<T>& tree)
+	friend std::istream& operator>>(std::istream& in, BinarySearchTree<T>& tree)
 	{
 		int n = 0;
 		in >> n;
