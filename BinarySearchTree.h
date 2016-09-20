@@ -94,21 +94,14 @@ public:
 
 	friend std::ostream& operator<<(std::ostream& out, const BinarySearchTree<T>& tree)
 	{
-		if (tree.size_) out << tree.size_ << ' ' << *tree.root_;
+		if (tree.size_) out << *tree.root_;
 		return out;
 	}
 
 	friend std::istream& operator>>(std::istream& in, BinarySearchTree<T>& tree)
 	{
-		int n = 0;
-		in >> n;
-		if (n == 0) return in;
-		else for (int i = 0; i < n; i++)
-		{
-			T value;
-			in >> value;
-			tree.insert(value);
-		}
+		T value;
+		while (in >> value) tree.insert(value);
 		return in;
 	}
 
