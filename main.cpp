@@ -9,11 +9,11 @@ void main()
 	//out << tree;
 	//out.close();
 	//std::cout << tree << std::endl;
-	BinarySearchTree<int>* tree = new BinarySearchTree<int>();
-	std::ifstream in("Tree.txt");
-	in >> *tree;
-	in.close();
-	std::cout << *tree << std::endl;
-	delete tree;
+	//BinarySearchTree<int>* tree = new BinarySearchTree<int>();
+	//std::ifstream in("Tree.txt");
+	//in >> *tree;
+	//in.close();
+	//std::cout << *tree << std::endl;
+	//delete tree;
 	system("pause");
 }

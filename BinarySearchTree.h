@@ -66,30 +66,19 @@ public:
 			size_ = 1;
 			return true;
 		}
-		else
+		Node* curNode = root_;
+		Node* prevNode = nullptr;
+		while (curNode)
 		{
-			Node* curNode = root_;
-			for (; ; )
-			{
-				if (value == curNode->value_) return false;
-				else if (value < curNode->value_)
-					if (curNode->left_) curNode = curNode->left_;
-					else
-					{
-						curNode->left_ = new Node(value);
-						++size_;
-						return true;
-					}
-				else if (value > curNode->value_)
-					if (curNode->right_) curNode = curNode->right_;
-					else
-					{
-						curNode->right_ = new Node(value);
-						++size_;
-						return true;
-					}
-			}
+			prevNode = curNode;
+			if (value == curNode->value_) return false;
+			else if (value < curNode->value_) curNode = curNode->left_;
+			else curNode = curNode->right_;
 		}
+		if (value < prevNode->value_) prevNode->left_ = new Node(value);
+		else prevNode->right_ = new Node(value);
+		size_++;
+		return true;
 	}
 
 	friend std::ostream& operator<<(std::ostream& out, const BinarySearchTree<T>& tree)
