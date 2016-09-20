@@ -34,18 +34,18 @@ public:
 
 	BinarySearchTree() : root_(nullptr), size_(0) {};
 
-	BinarySearchTree(const std::initializer_list<T>& list) : root_(nullptr), size_(0)
+	BinarySearchTree(const std::initializer_list<T>& list) : BinarySearchTree()
 	{
 		for (auto& value : list)
 			insert(value);
 	};
 
-	auto size() //noexcept -> size_t
+	auto size() noexcept -> size_t
 	{
 		return size_;
 	};
 
-	const T* find(const T& value) //const noexcept -> const T*
+	auto find(const T& value) const noexcept -> const T*
 	{
 		if (size_ == 0) return nullptr;
 		Node* curNode = root_;
@@ -58,7 +58,7 @@ public:
 		return nullptr;
 	}
 
-	auto insert(const T& value) //noexept -> bool
+	auto insert(const T& value) noexcept -> bool
 	{
 		if (size_ == 0)
 		{
@@ -66,13 +66,13 @@ public:
 			size_ = 1;
 			return true;
 		}
-		else if (find(value)) return false;
 		else
 		{
 			Node* curNode = root_;
 			for (; ; )
 			{
-				if (value < curNode->value_)
+				if (value == curNode->value_) return false;
+				else if (value < curNode->value_)
 					if (curNode->left_) curNode = curNode->left_;
 					else
 					{
