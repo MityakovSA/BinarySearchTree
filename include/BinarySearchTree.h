@@ -15,13 +15,13 @@ public:
 
         Node(T value) : value_(value), left_(nullptr), right_(nullptr) {}
 
-        /*friend std::ostream& operator<<(std::ostream& out, const Node& node)
+        Node* copy()
         {
-            if (node.right_) out << *node.right_;
-            out << node.value_ << ' ';
-            if (node.left_) out << *node.left_;
-            return out;
-        }*/
+            Node* cNode = new Node(value_);
+            if (left_) cNode->left_ = left_->copy();
+            if (right_) cNode->right_ = right_->copy();
+            return cNode;
+        }
 
         ~Node()
         {
@@ -39,6 +39,20 @@ public:
         for (auto& value : list)
             insert(value);
     };
+
+    BinarySearchTree(const BinarySearchTree& tree)
+    {
+        size_ = tree.size_;
+        root_ = tree.root_->copy();
+    }
+
+    BinarySearchTree(BinarySearchTree&& tree)
+    {
+        root_ = tree.root_;
+        tree.root_ = nullptr;
+        size_ = tree.size_;
+        tree.size_ = 0;
+    }
 
     auto size() const noexcept -> size_t
     {
@@ -81,7 +95,7 @@ public:
         return true;
     }
 
-    bool osymmetric(std::ostream& out, Node* node) const
+    bool osymmetric(std::ostream& out, Node* node) const noexcept
     {
         if (node)
         {
@@ -92,7 +106,7 @@ public:
         } else return false;
     }
 
-    bool odirect(std::ofstream& out, Node* node) const
+    bool odirect(std::ofstream& out, Node* node) const noexcept
     {
         if (node)
         {
@@ -101,6 +115,49 @@ public:
             odirect(out, node->right_);
             return true;
         } else return false;
+    }
+
+    bool equal(Node* fnode, Node* snode) const noexcept
+    {
+        if (fnode)
+        return snode && (fnode->value_ == snode->value_) &&
+                         equal(fnode->left_, snode->left_) &&
+                         equal(fnode->right_, snode->right_);
+        else if (snode == nullptr) return true;
+        else return false;
+    }
+
+    auto operator == (const BinarySearchTree& tree) const -> bool
+    {
+        if (this == &tree) return true;
+        else if (size_ == tree.size_) return tree.equal(root_, tree.root_);
+        else return false;
+    }
+
+    auto operator = (const BinarySearchTree& tree) -> BinarySearchTree&
+    {
+        if (this == &tree) return *this;
+        else
+        {
+            delete root_;
+            size_ = tree.size_;
+            root_ = tree.root_->copy();
+            return *this;
+        }
+    }
+
+    auto operator = (BinarySearchTree&& tree) -> BinarySearchTree&
+    {
+        if (this == &tree) return *this;
+        else
+        {
+            delete root_;
+            size_ = tree.size_;
+            tree.size_ = 0;
+            root_ = tree.root_;
+            tree.root_ = nullptr;
+            return *this;
+        }
     }
 
     friend auto operator << (std::ostream& out, const BinarySearchTree<T>& tree) -> std::ostream&
