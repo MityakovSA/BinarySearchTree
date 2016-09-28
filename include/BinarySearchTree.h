@@ -15,13 +15,13 @@ public:
 
         Node(T value) : value_(value), left_(nullptr), right_(nullptr) {}
 
-        friend std::ostream& operator<<(std::ostream& out, const Node& node)
+        /*friend std::ostream& operator<<(std::ostream& out, const Node& node)
         {
+            if (node.right_) out << *node.right_;
             out << node.value_ << ' ';
             if (node.left_) out << *node.left_;
-            if (node.right_) out << *node.right_;
             return out;
-        }
+        }*/
 
         ~Node()
         {
@@ -81,13 +81,41 @@ public:
         return true;
     }
 
-    friend std::ostream& operator<<(std::ostream& out, const BinarySearchTree<T>& tree)
+    bool osymmetric(std::ostream& out, Node* node) const
     {
-        if (tree.size_) out << *tree.root_;
+        if (node)
+        {
+            osymmetric(out, node->right_);
+            out << node->value_ << ' ';
+            osymmetric(out, node->left_);
+            return true;
+        } else return false;
+    }
+
+    bool odirect(std::ofstream& out, Node* node) const
+    {
+        if (node)
+        {
+            out << node->value_ << ' ';
+            odirect(out, node->left_);
+            odirect(out, node->right_);
+            return true;
+        } else return false;
+    }
+
+    friend auto operator << (std::ostream& out, const BinarySearchTree<T>& tree) -> std::ostream&
+    {
+        tree.osymmetric(out, tree.root_);
         return out;
     }
 
-    friend std::istream& operator>>(std::istream& in, BinarySearchTree<T>& tree)
+    friend auto operator << (std::ofstream& out, const BinarySearchTree<T>& tree) -> std::ofstream&
+    {
+        tree.odirect(out, tree.root_);
+        return out;
+    }
+
+    friend auto operator >> (std::istream& in, BinarySearchTree<T>& tree) -> std::istream&
     {
         T value;
         while (in >> value) tree.insert(value);
