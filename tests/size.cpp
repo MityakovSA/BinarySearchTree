@@ -10,7 +10,7 @@ SCENARIO("Size of empty tree must be equal 0")
         {
             THEN("Size must be equal 0")
             {
-                REQUARE(tree.size() == 0);
+                REQUIRE(tree.size() == 0);
             }
         }
     }
@@ -25,7 +25,7 @@ SCENARIO("Size of not empty tree must not be equal 0")
         {
             THEN("Size must not be equal 0")
             {
-                REQUARE(tree.size() != 0);
+                REQUIRE(tree.size() != 0);
             }
         }
     }
@@ -41,7 +41,7 @@ SCENARIO("Method must support const and non-const objects")
         {
             THEN("Size must be equal")
             {
-                REQUARE(tree1.size() == tree2.size());
+                REQUIRE(tree1.size() == tree2.size());
             }
         }
     }
