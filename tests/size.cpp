@@ -1,4 +1,5 @@
 #include "Catch.h"
+#include "BinarySearchTree.h"
 
 SCENARIO("Size of empty tree must be equal 0")
 {
