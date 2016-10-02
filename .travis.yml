@@ -31,4 +31,4 @@ script:
   - mkdir build
   - cd build
   - cmake .. && make
-  - Tests -s -r compact
+  - ./Tests -s -r compact
