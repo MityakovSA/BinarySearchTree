@@ -31,7 +31,7 @@ SCENARIO("Size of not empty tree must not be equal 0")
     }
 }
 
-SCENARIO("Method must support const and non-const objects")
+SCENARIO("size() must support const and non-const objects")
 {
     GIVEN("const and non-const tree")
     {
