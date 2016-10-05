@@ -39,7 +39,7 @@ SCENARIO("If inserting element is lesser than root of the tree, it must be inser
       BinarySearchTree<int> tree2 { 10, 8 };
       WHEN("Inserting")
       {
-         tree1.insert(8)
+         tree1.insert(8);
          THEN("Element must be inserted left from root")
          {
             REQUIRE(tree1 == tree2);
@@ -56,7 +56,7 @@ SCENARIO("If inserting element is bigger than root of the tree, it must be inser
       BinarySearchTree<int> tree2 { 10, 12 };
       WHEN("Inserting")
       {
-         tree1.insert(12)
+         tree1.insert(12);
          THEN("Element must be inserted right from root")
          {
             REQUIRE(tree1 == tree2);
@@ -72,7 +72,7 @@ SCENARIO("If inserting element already exist in tree, method must not change siz
       BinarySearchTree<int> tree { 8,10,3};
       WHEN("Inserting")
       {
-         tree.insert(10)
+         tree.insert(10);
          THEN("Method must not change size of tree")
          {
             REQUIRE(tree.size() == 3);
@@ -88,7 +88,7 @@ SCENARIO("If inserting element does not exist in tree, method must increment siz
       BinarySearchTree<int> tree { 8,10,3};
       WHEN("Inserting")
       {
-         tree.insert(7)
+         tree.insert(7);
          THEN("Method must increment size of tree")
          {
             REQUIRE(tree.size() == 4);
