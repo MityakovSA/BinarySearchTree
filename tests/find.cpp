@@ -1,7 +1,7 @@
 #include "catch.hpp"
 #include "BinarySearchTree.hpp"
 
-SCENARIO("If element exist in tree, method must return ptr on it")
+SCENARIO("If element exist in tree, find() must return ptr on it")
 {
    GIVEN("Tree with existing element")
    {
@@ -16,7 +16,7 @@ SCENARIO("If element exist in tree, method must return ptr on it")
    }
 }
 
-SCENARIO("If element does not exist in tree, method must return nullptr")
+SCENARIO("If element does not exist in tree, find() must return nullptr")
 {
    GIVEN("Tree witn non-existing element")
    {
@@ -31,7 +31,7 @@ SCENARIO("If element does not exist in tree, method must return nullptr")
    }
 }
 
-SCENARIO("Method must support const and non-const objects")
+SCENARIO("find() must support const and non-const objects")
 {
     GIVEN("const and non-const tree")
     {
