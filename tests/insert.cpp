@@ -1,5 +1,5 @@
-#include "Catch.h"
-#include "BinarySearchTree.h"
+#include "catch.hpp"
+#include "BinarySearchTree.hpp"
 
 SCENARIO("If inserting element already exist in tree, method must return false")
 {
