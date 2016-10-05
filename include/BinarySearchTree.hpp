@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstddef>
 #include <fstream>
+#include <memory>
 
 
 template <typename T>
@@ -10,14 +11,14 @@ public:
     struct Node
     {
         T value_;
-        Node* left_;
-        Node* right_;
+        std::shared_ptr<Node> left_;
+        std::shared_ptr<Node> right_;
 
         Node(T value) : value_(value), left_(nullptr), right_(nullptr) {}
 
-        Node* copy()
+        std::shared_ptr<Node> copy()
         {
-            Node* cNode = new Node(value_);
+            std::shared_ptr<Node> cNode(new Node(value_));
             if (left_) cNode->left_ = left_->copy();
             if (right_) cNode->right_ = right_->copy();
             return cNode;
@@ -26,9 +27,9 @@ public:
         ~Node()
         {
             if (left_)
-                delete left_;
+                left_ = nullptr;
             if (right_)
-                delete right_;
+                right_ = nullptr;
         }
     };
 
@@ -62,7 +63,7 @@ public:
     auto find(const T& value) const noexcept -> const T*
     {
         if (size_ == 0) return nullptr;
-        Node* curNode = root_;
+        std::shared_ptr<Node> curNode(root_);
         do
         {
             if (value == curNode->value_) return &curNode->value_;
@@ -76,12 +77,12 @@ public:
     {
         if (size_ == 0)
         {
-            root_ = new Node(value);
+            root_.reset(new Node(value));
             size_ = 1;
             return true;
         }
-        Node* curNode = root_;
-        Node* prevNode = nullptr;
+        std::shared_ptr<Node> curNode(root_);
+        std::shared_ptr<Node> prevNode(nullptr);
         while (curNode)
         {
             prevNode = curNode;
@@ -89,13 +90,13 @@ public:
             else if (value < curNode->value_) curNode = curNode->left_;
             else curNode = curNode->right_;
         }
-        if (value < prevNode->value_) prevNode->left_ = new Node(value);
-        else prevNode->right_ = new Node(value);
+        if (value < prevNode->value_) prevNode->left_.reset(new Node(value));
+        else prevNode->right_.reset(new Node(value));
         size_++;
         return true;
     }
 
-    bool osymmetric(std::ostream& out, Node* node) const noexcept
+    bool osymmetric(std::ostream& out, std::shared_ptr<Node> node) const noexcept
     {
         if (node)
         {
@@ -106,7 +107,7 @@ public:
         } else return false;
     }
 
-    bool odirect(std::ofstream& out, Node* node) const noexcept
+    bool odirect(std::ofstream& out, std::shared_ptr<Node> node) const noexcept
     {
         if (node)
         {
@@ -117,7 +118,7 @@ public:
         } else return false;
     }
 
-    bool equal(Node* fnode, Node* snode) const noexcept
+    bool equal(std::shared_ptr<Node> fnode, std::shared_ptr<Node> snode) const noexcept
     {
         if (fnode)
         return snode && (fnode->value_ == snode->value_) &&
@@ -139,7 +140,7 @@ public:
         if (this == &tree) return *this;
         else
         {
-            delete root_;
+            root_ = nullptr;
             size_ = tree.size_;
             root_ = tree.root_->copy();
             return *this;
@@ -151,7 +152,7 @@ public:
         if (this == &tree) return *this;
         else
         {
-            delete root_;
+            root_ = nullptr;
             size_ = tree.size_;
             tree.size_ = 0;
             root_ = tree.root_;
@@ -181,11 +182,11 @@ public:
 
     ~BinarySearchTree()
     {
-        delete root_;
+        root_ = nullptr;
         size_ = 0;
     }
 
 private:
-    Node* root_;
+    std::shared_ptr<Node> root_;
     size_t size_;
 };
