@@ -1,1 +1,1 @@
-#include "../include/BinarySearchTree.h"
+#include "BinarySearchTree.hpp"
