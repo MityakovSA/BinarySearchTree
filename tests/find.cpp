@@ -41,7 +41,8 @@ SCENARIO("find() must support const and non-const objects")
         {
             THEN("Method must find elements")
             {
-                REQUIRE(tree1.find(10) == tree2.find(9));
+               REQUIRE(tree1.find(10));
+               REQUIRE(tree2.find(9));
             }
         }
     }
