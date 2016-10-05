@@ -1,7 +1,7 @@
 #include "catch.hpp"
 #include "BinarySearchTree.hpp"
 
-SCENARIO("If inserting element already exist in tree, method must return false")
+SCENARIO("If inserting element already exist in tree, insert() must return false")
 {
    GIVEN("Tree with existing element")
    {
@@ -16,7 +16,7 @@ SCENARIO("If inserting element already exist in tree, method must return false")
    }
 }
 
-SCENARIO("If inserting element does not exist in tree, method must return true")
+SCENARIO("If inserting element does not exist in tree, insert() must return true")
 {
    GIVEN("Tree with non-existing element")
    {
@@ -65,7 +65,7 @@ SCENARIO("If inserting element is bigger than root of the tree, it must be inser
    }
 }
 
-SCENARIO("If inserting element already exist in tree, method must not change size of tree")
+SCENARIO("If inserting element already exist in tree, insert() must not change size of tree")
 {
    GIVEN("Tree with existing element")
    {
@@ -81,7 +81,7 @@ SCENARIO("If inserting element already exist in tree, method must not change siz
    }
 }
 
-SCENARIO("If inserting element does not exist in tree, method must increment size of tree")
+SCENARIO("If inserting element does not exist in tree, insert() must increment size of tree")
 {
    GIVEN("Tree with non-existing element")
    {
