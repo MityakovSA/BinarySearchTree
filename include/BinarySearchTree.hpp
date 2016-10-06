@@ -96,6 +96,11 @@ public:
         return true;
     }
 
+    /*auto remove(const T& value) -> bool
+    {
+        std::shared_ptr fNode(find(value));
+    }*/
+
     bool osymmetric(std::ostream& out, std::shared_ptr<Node> node) const noexcept
     {
         if (node)

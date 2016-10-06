@@ -16,7 +16,7 @@ int main()
     //out << tree;
     //out.close();
     std::cout << tree << std::endl;
-    BinarySearchTree<int> tree2(tree);
+    BinarySearchTree<int> tree2(std::move(tree));
     std::cout << tree2 << std::endl;
     tree2.insert(5);
     tree = tree2;
