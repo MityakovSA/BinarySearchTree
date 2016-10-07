@@ -96,10 +96,60 @@ public:
         return true;
     }
 
-    /*auto remove(const T& value) -> bool
+    auto remove(const T& value) -> bool
     {
-        std::shared_ptr fNode(find(value));
-    }*/
+        if (size_ == 0) return false;
+        else if (remove_n(value, root_))
+        {
+            size_--;
+            return true;
+        };
+    }
+
+    auto remove_n(const T& value, std::shared_ptr<Node>& curNode) -> bool
+    {
+        if (curNode == nullptr) return false;
+        if (value > curNode->value_) remove_n(value, curNode->right_);
+        else if (value < curNode->value_) remove_n(value, curNode->left_);
+        else
+        {
+            if ((curNode->left_ == nullptr) && (curNode->right_ == nullptr)) curNode = nullptr;
+            else if (curNode->left_ == nullptr) curNode = curNode->right_;
+            else if (curNode->right_ == nullptr) curNode = curNode->left_;
+            else
+            {
+                auto parent = curNode;
+                auto min = curNode->right_;
+                bool check = false;
+                while (min->left_)
+                {
+                    if (!check) check = true;
+                    parent = min;
+                    min = min->left_;
+                }
+                if (min->right_)
+                {
+                    if (check)
+                    {
+                        curNode->value_ = min->value_;
+                        parent->left_ = min->right_;
+                    }
+                    else
+                    {
+                        min->left_ = parent->left_;
+                        curNode = min;
+                    }
+                }
+                else
+                {
+                    curNode->value_ = min->value_;
+                    if (check) parent->left_ = nullptr;
+                    else parent->right_ = nullptr;
+                }
+            }
+            return true;
+        }
+    }
 
     bool osymmetric(std::ostream& out, std::shared_ptr<Node> node) const noexcept
     {

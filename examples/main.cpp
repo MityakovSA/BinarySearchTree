@@ -3,7 +3,8 @@
 
 int main()
 {
-    BinarySearchTree<int> tree{ 8,10,3,14,6,1,7,13,4 };
+    BinarySearchTree<int> tree{ 8,3,1,6,4,7,15,11,9,10,12,16 };
+    //BinarySearchTree<int> tree{ 8,10,3,14,6,1,7,13,4 };
     //BinarySearchTree<int> tree2{ 8,10,3,14,6,1,7,13,4 };
     //if (tree == tree2) std::cout << "TRUE" << std::endl;
     //else std::cout << "FALSE" << std::endl;
@@ -16,10 +17,11 @@ int main()
     //out << tree;
     //out.close();
     std::cout << tree << std::endl;
-    BinarySearchTree<int> tree2(std::move(tree));
-    std::cout << tree2 << std::endl;
-    tree2.insert(5);
-    tree = tree2;
+    //BinarySearchTree<int> tree2(std::move(tree));
+    //std::cout << tree2 << std::endl;
+    //tree2.insert(5);
+    //tree = tree2;
+    tree.remove(8);
     std::cout << tree << std::endl;
     //BinarySearchTree<int>* tree = new BinarySearchTree<int>();
     //std::ifstream in("Tree.txt");
