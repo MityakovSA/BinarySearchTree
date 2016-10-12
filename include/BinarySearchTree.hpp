@@ -109,8 +109,8 @@ public:
     auto remove_n(const T& value, std::shared_ptr<Node>& curNode) -> bool
     {
         if (curNode == nullptr) return false;
-        if (value > curNode->value_) remove_n(value, curNode->right_);
-        else if (value < curNode->value_) remove_n(value, curNode->left_);
+        if (value > curNode->value_) return remove_n(value, curNode->right_);
+        else if (value < curNode->value_)  return remove_n(value, curNode->left_);
         else
         {
             if ((curNode->left_ == nullptr) && (curNode->right_ == nullptr)) curNode = nullptr;
@@ -120,32 +120,17 @@ public:
             {
                 auto parent = curNode;
                 auto min = curNode->right_;
-                bool check = false;
+                bool check = true;
                 while (min->left_)
                 {
-                    if (!check) check = true;
+                    if (check) check = false;
                     parent = min;
                     min = min->left_;
                 }
-                if (min->right_)
-                {
-                    if (check)
-                    {
-                        curNode->value_ = min->value_;
-                        parent->left_ = min->right_;
-                    }
-                    else
-                    {
-                        min->left_ = parent->left_;
-                        curNode = min;
-                    }
-                }
-                else
-                {
-                    curNode->value_ = min->value_;
-                    if (check) parent->left_ = nullptr;
-                    else parent->right_ = nullptr;
-                }
+                curNode->value_ = min->value_;
+                if (min->right_) parent->left_ = min->right_;
+                else if (check) parent->right_ = nullptr;
+                else parent->left_ = nullptr;
             }
             return true;
         }

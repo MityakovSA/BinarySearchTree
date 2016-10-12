@@ -8,5 +8,5 @@ include_directories(include)
 add_library(BinarySearchTree STATIC ${CMAKE_CURRENT_SOURCE_DIR}/source/BinarySearchTree.cpp)
 
 add_executable(Examples ${CMAKE_CURRENT_SOURCE_DIR} examples/main.cpp)
-add_executable(Tests ${TESTS_SOURCE} tests/catch.hpp tests/main.cpp tests/size.cpp tests/insert.cpp tests/find.cpp)
+add_executable(Tests ${TESTS_SOURCE} tests/catch.hpp tests/main.cpp tests/size.cpp tests/insert.cpp tests/find.cpp tests/remove.cpp)
 
