@@ -128,9 +128,12 @@ public:
                     min = min->left_;
                 }
                 curNode->value_ = min->value_;
-                if (min->right_) parent->left_ = min->right_;
-                else if (check) parent->right_ = nullptr;
-                else parent->left_ = nullptr;
+                if (check)
+                    if (min->right_) parent->right_ = min->right_;
+                    else parent->right_ = nullptr;
+                else
+                    if (min->right_) parent->left_ = min->right_;
+                    else parent->left_ = nullptr;
             }
             return true;
         }

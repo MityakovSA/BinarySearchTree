@@ -95,5 +95,45 @@ SCENARIO("If removing element exist in tree, remove() must remove it and change 
                 REQUIRE(tree1 == tree2);
             }
         }
+        tree1 = BinarySearchTree<int> ( { 8,3,1,6,4,7,15,11,9,10,16 } );
+        tree2 = BinarySearchTree<int> ( { 8,3,1,6,4,7,15,9,10,16 } );
+        WHEN("Removing node with only left children")
+        {
+            tree1.remove(11);
+            THEN("Trees must be equivalent")
+            {
+                REQUIRE(tree1 == tree2);
+            }
+        }
+        tree1 = BinarySearchTree<int> ( { 8,3,1,6,4,7,10,14,13,15 } );
+        tree2 = BinarySearchTree<int> ( { 8,3,1,6,4,7,14,13,15 } );
+        WHEN("Removing node with only right children")
+        {
+            tree1.remove(10);
+            THEN("Trees must be equivalent")
+            {
+                REQUIRE(tree1 == tree2);
+            }
+        }
+        tree1 = BinarySearchTree<int> ( { 8,3,1,6,4,7,15,11,9,10,12,16 } );
+        tree2 = BinarySearchTree<int> ( { 8,3,1,6,4,7,16,11,9,10,12 } );
+        WHEN("Removing node with both left and right children")
+        {
+            tree1.remove(15);
+            THEN("Trees must be equivalent")
+            {
+                REQUIRE(tree1 == tree2);
+            }
+        }
+        tree1 = BinarySearchTree<int> ( { 8,3,1,6,4,7,15,11,9,10,12,16 } );
+        tree2 = BinarySearchTree<int> ( { 9,3,1,6,4,7,15,11,10,12,16 } );
+        WHEN("Removing root")
+        {
+            tree1.remove(8);
+            THEN("Trees must be equivalent")
+            {
+                REQUIRE(tree1 == tree2);
+            }
+        }
     }
 }
