@@ -2,6 +2,7 @@
 #include <cstddef>
 #include <fstream>
 #include <memory>
+#include <exception>
 
 
 template <typename T>
