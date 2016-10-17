@@ -3,6 +3,7 @@
 #include <fstream>
 #include <memory>
 #include <exception>
+#include <typeinfo>
 
 
 template <typename T>
@@ -99,6 +100,7 @@ public:
 
     auto remove(const T& value) -> bool
     {
+        //if (typeid(value) != typeid(const T&)) throw std::logic_error("wrong type");
         if (size_ == 0) return false;
         else if (remove_n(value, root_))
         {
