@@ -1,16 +1,16 @@
 #include "catch.hpp"
 #include "BinarySearchTree.hpp"
 
-SCENARIO("If inserting element already exist in tree, insert() must return false")
+SCENARIO("If inserting element already exist in tree, insert() must throw exception")
 {
    GIVEN("Tree with existing element")
    {
       BinarySearchTree<int> tree { 8,10,3};
       WHEN("Inserting")
       {
-         THEN("Method must return false")
+         THEN("Method must throw exception")
          {
-            REQUIRE(tree.insert(10) == false);
+            REQUIRE_THROWS_AS(tree.insert(10), BinarySearchTree<int>::BST_exception);
          }
       }
    }
@@ -65,7 +65,7 @@ SCENARIO("If inserting element is bigger than root of the tree, it must be inser
    }
 }
 
-SCENARIO("If inserting element already exist in tree, insert() must not change size of tree")
+/*SCENARIO("If inserting element already exist in tree, insert() must not change size of tree")
 {
    GIVEN("Tree with existing element")
    {
@@ -79,7 +79,7 @@ SCENARIO("If inserting element already exist in tree, insert() must not change s
          }
       }
    }
-}
+}*/
 
 SCENARIO("If inserting element does not exist in tree, insert() must increment size of tree")
 {

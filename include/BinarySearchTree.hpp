@@ -3,7 +3,7 @@
 #include <fstream>
 #include <memory>
 #include <exception>
-#include <typeinfo>
+#include <string>
 
 
 template <typename T>
@@ -18,7 +18,7 @@ public:
 
         Node(T value) : value_(value), left_(nullptr), right_(nullptr) {}
 
-        std::shared_ptr<Node> copy()
+        std::shared_ptr<Node> copy() noexcept
         {
             std::shared_ptr<Node> cNode(new Node(value_));
             if (left_) cNode->left_ = left_->copy();
@@ -33,6 +33,13 @@ public:
             if (right_)
                 right_ = nullptr;
         }
+    };
+
+    class BST_exception : public std::logic_error
+    {
+    public:
+        explicit BST_exception(const std::string& what_arg) : std::logic_error(what_arg) {}
+        explicit BST_exception(const char* what_arg) : std::logic_error(what_arg) {}
     };
 
     BinarySearchTree() : root_(nullptr), size_(0) {};
@@ -62,9 +69,9 @@ public:
         return size_;
     };
 
-    auto find(const T& value) const noexcept -> const T*
+    auto find(const T& value) const -> const T*
     {
-        if (size_ == 0) return nullptr;
+        if (size_ == 0) throw BST_exception("Tree is empty, nothing to find!");
         std::shared_ptr<Node> curNode(root_);
         do
         {
@@ -72,10 +79,10 @@ public:
             else if (value < curNode->value_) curNode = curNode->left_;
             else if (value > curNode->value_) curNode = curNode->right_;
         } while (curNode);
-        return nullptr;
+        throw BST_exception("This node can't be found!");
     }
 
-    auto insert(const T& value) noexcept -> bool
+    auto insert(const T& value) -> bool
     {
         if (size_ == 0)
         {
@@ -88,7 +95,7 @@ public:
         while (curNode)
         {
             prevNode = curNode;
-            if (value == curNode->value_) return false;
+            if (value == curNode->value_) throw BST_exception("This node already exists!");
             else if (value < curNode->value_) curNode = curNode->left_;
             else curNode = curNode->right_;
         }
@@ -100,8 +107,7 @@ public:
 
     auto remove(const T& value) -> bool
     {
-        //if (typeid(value) != typeid(const T&)) throw std::logic_error("wrong type");
-        if (size_ == 0) return false;
+        if (size_ == 0) throw BST_exception("Tree is empty, nothing to remove!");
         else if (remove_n(value, root_))
         {
             size_--;
@@ -111,7 +117,7 @@ public:
 
     auto remove_n(const T& value, std::shared_ptr<Node>& curNode) -> bool
     {
-        if (curNode == nullptr) return false;
+        if (curNode == nullptr) throw BST_exception("This node can't be found!");
         if (value > curNode->value_) return remove_n(value, curNode->right_);
         else if (value < curNode->value_)  return remove_n(value, curNode->left_);
         else

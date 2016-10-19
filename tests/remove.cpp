@@ -1,16 +1,16 @@
 #include "catch.hpp"
 #include "BinarySearchTree.hpp"
 
-SCENARIO("If removing element does not exist in tree, remove() must return false")
+SCENARIO("If removing element does not exist in tree, remove() must throw exception")
 {
     GIVEN("Tree with non-existing element")
     {
         BinarySearchTree<int> tree { 8,3,1,6,4,7,15,11,9,10,12,16 };
         WHEN("Removing")
         {
-            THEN("Method must return false")
+            THEN("Method must throw exception")
             {
-                REQUIRE(tree.remove(2) == false);
+                REQUIRE_THROWS_AS(tree.remove(2), BinarySearchTree<int>::BST_exception);
             }
         }
     }
@@ -31,7 +31,7 @@ SCENARIO("If removing element exist in tree, remove() must return true")
     }
 }
 
-SCENARIO("If removing element does not exist in tree, remove() must not change size of tree")
+/*SCENARIO("If removing element does not exist in tree, remove() must not change size of tree")
 {
     GIVEN("Tree with non-existing element")
     {
@@ -45,7 +45,7 @@ SCENARIO("If removing element does not exist in tree, remove() must not change s
             }
         }
     }
-}
+}*/
 
 SCENARIO("If removing element exist in tree, remove() must decrement size of tree")
 {
@@ -64,7 +64,7 @@ SCENARIO("If removing element exist in tree, remove() must decrement size of tre
     }
 }
 
-SCENARIO("If removing element does not exist in tree, remove() must not change its structure")
+/*SCENARIO("If removing element does not exist in tree, remove() must not change its structure")
 {
     GIVEN("Tree and with non-existing element and its copy")
     {
@@ -79,7 +79,7 @@ SCENARIO("If removing element does not exist in tree, remove() must not change i
             }
         }
     }
-}
+}*/
 
 SCENARIO("If removing element exist in tree, remove() must remove it and change tree's structure")
 {
@@ -133,6 +133,21 @@ SCENARIO("If removing element exist in tree, remove() must remove it and change 
             THEN("Trees must be equivalent")
             {
                 REQUIRE(tree1 == tree2);
+            }
+        }
+    }
+}
+
+SCENARIO("If tree is empty, remove() must throw exception")
+{
+    GIVEN("Empty tree")
+    {
+        BinarySearchTree<int> tree;
+        WHEN("Removing element")
+        {
+            THEN("Method must throw exception")
+            {
+                REQUIRE_THROWS_AS(tree.remove(7), BinarySearchTree<int>::BST_exception);
             }
         }
     }
